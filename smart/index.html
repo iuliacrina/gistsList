@@ -1,0 +1,105 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Gists list</title>
+        <meta name="viewport" content="width=980, user-scalable=no">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="css/style.css" media="screen" type="text/css"/>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://gitlist.himdek.com/GitHubList.js"></script>
+    </head>
+    <body>
+
+    <div class="container">
+        <form action="">
+            <input type="text" placeholder="Search user" name="search" id="username" value="vsouza">
+            <button type="submit"><i class="fa fa-search"></i></button>
+        </form>
+        <div class="leftContent"></div>
+        <div class="listContent"></div>
+    </div>
+
+    <script type="module">
+        import { request } from "https://cdn.pika.dev/@octokit/request";
+
+        var usernameValue = document.getElementById("username").value;
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        let userValue;
+        if(urlParams.get('search') == null) {
+            userValue = usernameValue;
+        } else if(urlParams.get('search') == ''){
+            userValue = usernameValue;
+        } else {
+            userValue = urlParams.get('search');
+        }
+
+        if(userValue){
+            document.getElementById("username").value = userValue;
+            asyncList();
+        }
+
+        async function asyncList() {
+            // token
+            const result = await request("GET /users/:user/repos", {
+                headers: {
+                    authorization: "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"
+                },
+                user: userValue
+            });
+
+            // difference years
+            var DateDiff = {
+                inYears: function(date1, date2) {
+                    return date2.getFullYear()-date1.getFullYear();
+                }
+            }
+
+            // list gists
+            if(!result.data.length == 0) {
+                $.each(result.data, function (index, value) {
+                    // console.log(value);
+                    var dateString = value.created_at;
+                    var date1 = new Date(dateString);
+                    var date2 = new Date();
+                    var checkValueLanguage = value.language != null ? '<div class="tab"><div class="language">' + value.language + '</div></div>' : '';
+                    var checkValueImage = value.owner.avatar_url != '' ? '<img src="' + value.owner.avatar_url + '"/>' : '';
+                    let test = '<div class="tabs item"> ' +
+                        '<div class="tab">' +
+                        '<div class="tabs">' +
+                        '<div class="tab avatar">' + checkValueImage + '</div>' +
+                        '<div class="tab">' +
+                        '<div class="name"><a href="' + value.svn_url + '" target="_blank">' + value.owner.login + ' / ' + value.name + '</a></div>' +
+                        '<div class="date">Created ' + DateDiff.inYears(date1, date2) + ' years ago</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' + checkValueLanguage +
+                        '</div>' +
+                        '<pre class="codeView">// difference years\n' +
+                        '            var DateDiff = {\n' +
+                        '                inYears: function(date1, date2) {\n' +
+                        '                    return date2.getFullYear()-date1.getFullYear();\n' +
+                        '                }\n' +
+                        '}</pre>';
+                    document.getElementsByClassName('listContent')[0].innerHTML += test;
+                });
+            } else {
+                document.getElementsByClassName('listContent')[0].innerHTML = '<p>No found results!</p>';
+            }
+
+        }
+
+        // $('.item').onclick = function() { alert('blah'); };
+        jQuery(document).on('click','.item', function() {
+            if($(this).next().is(':visible')){
+                $(this).next().slideUp();
+            } else {
+                $(this).next().slideDown();
+            }
+        });
+
+    </script>
+    </body>
+</html>

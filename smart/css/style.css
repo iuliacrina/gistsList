@@ -1,0 +1,111 @@
+body {
+    padding: 0;
+    margin: 0;
+    font-size: 16px;
+}
+a {
+    text-decoration: none;
+}
+.container {
+    max-width: 1200px;
+    margin: 0px auto;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+.tabs {
+    display: table;
+    width: 100%;
+}
+.tab {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+form {
+    padding: 20px 0;
+    text-align: center;
+    margin: 20px 0;
+    border-radius: 10px;
+    -webkit-box-shadow: 0px 0px 10px -4px rgba(119,119,119,1);
+    -moz-box-shadow: 0px 0px 10px -4px rgba(119,119,119,1);
+    box-shadow: 0px 0px 10px -4px rgba(119,119,119,1);
+}
+#username {
+    border: 1px solid #ccc;
+    padding: 6px;
+    font-size: 16px;
+    margin: 0px auto;
+    min-width: 230px;
+}
+#username:focus-visible {
+    outline: none;
+}
+button {
+    background: transparent;
+    border: none;
+    position: relative;
+    z-index: 9;
+    margin-left: -30px;
+    cursor: pointer;
+}
+
+.item {
+    padding: 30px 0;
+    border-bottom: 1px solid #ccc;
+    cursor: pointer;
+}
+.listContent .item:last-child {
+    border-bottom: none;
+}
+.date {
+    color: #555;
+    font-size: 14px;
+}
+.avatar {
+    overflow: hidden;
+    width: 50px;
+}
+.avatar img {
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+    width: 40px;
+}
+.language {
+    background: #3675ab;
+    display: table;
+    margin: 0 0 0 auto;
+    padding: 3px 8px;
+    color: #fff;
+    border-radius: 6px;
+    font-size: 13px;
+}
+.name a {
+    color: #5478e1;
+}
+.codeView {
+    background: #222;
+    color: #fff;
+    padding: 20px;
+    font-size: 15px;
+    margin: 0;
+    display: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
